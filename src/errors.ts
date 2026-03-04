@@ -20,10 +20,10 @@ export const ERROR_CODES = {
 
 export type LastFMErrorCode = keyof typeof ERROR_CODES;
 
-export interface LastFMErrorResponse {
+export type LastFMErrorResponse = {
   error: number;
   message: string;
-}
+};
 
 export class LastFMError extends Error {
   public readonly code: number;

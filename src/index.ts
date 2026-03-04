@@ -52,6 +52,7 @@ export type {
   UserLovedTracksResult,
   UserPersonalTagsResult,
   UserRecentTracksResult,
+  UserRecentTracksExtendedResult,
   UserTopAlbumsResult,
   UserTopArtistsResult,
   UserTopTagsResult,

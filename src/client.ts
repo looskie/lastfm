@@ -1,6 +1,10 @@
 import { createHash } from "node:crypto";
 import { pathcat } from "pathcat";
-import type { LastFMEndpoints } from "./endpoints.ts";
+import type {
+  LastFMEndpoints,
+  UserRecentTracksResult,
+  UserRecentTracksExtendedResult,
+} from "./endpoints.ts";
 import { LastFMError } from "./errors.ts";
 import type {
   MethodNames,
@@ -25,11 +29,11 @@ const POST_METHODS: ReadonlySet<string> = new Set([
   "auth.getSession",
 ]);
 
-export interface LastFMClientOptions {
+export type LastFMClientOptions = {
   apiKey: string;
   apiSecret?: string;
   sessionKey?: string;
-}
+};
 
 export class LastFM {
   private readonly options: LastFMClientOptions;
@@ -50,10 +54,36 @@ export class LastFM {
     return createHash("md5").update(str).digest("hex");
   }
 
+  async request(
+    method: "user.getRecentTracks",
+    params: {
+      user: string;
+      extended: 1;
+      from?: number;
+      to?: number;
+      limit?: number;
+      page?: number;
+    },
+  ): Promise<UserRecentTracksExtendedResult>;
+  async request(
+    method: "user.getRecentTracks",
+    params: {
+      user: string;
+      extended?: 0;
+      from?: number;
+      to?: number;
+      limit?: number;
+      page?: number;
+    },
+  ): Promise<UserRecentTracksResult>;
   async request<M extends MethodNames<LastFMEndpoints>>(
     method: M,
     ...[params]: RequestArgs<LastFMEndpoints, M>
-  ): Promise<ResponseFor<LastFMEndpoints, M>> {
+  ): Promise<ResponseFor<LastFMEndpoints, M>>;
+  async request(
+    method: string,
+    params?: Record<string, unknown>,
+  ): Promise<unknown> {
     const isPost = POST_METHODS.has(method as string);
     const baseParams: Record<string, string> = {
       method: method as string,
@@ -103,6 +133,6 @@ export class LastFM {
       );
     }
 
-    return json as ResponseFor<LastFMEndpoints, M>;
+    return json;
   }
 }

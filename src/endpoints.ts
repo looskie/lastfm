@@ -2,34 +2,34 @@ import type { Endpoint } from "./types.ts";
 
 // ---- shared types ----
 
-export interface LastFMImage {
+export type LastFMImage = {
   "#text": string;
   size: "small" | "medium" | "large" | "extralarge" | "mega" | "";
-}
+};
 
-export interface LastFMTag {
+export type LastFMTag = {
   name: string;
   url: string;
-}
+};
 
-export interface LastFMTagWithCount extends LastFMTag {
+export type LastFMTagWithCount = LastFMTag & {
   count: number;
-}
+};
 
-export interface LastFMWiki {
+export type LastFMWiki = {
   published: string;
   summary: string;
   content: string;
-}
+};
 
-export interface LastFMPaginationAttr {
+export type LastFMPaginationAttr = {
   page: string;
   perPage: string;
   totalPages: string;
   total: string;
-}
+};
 
-export interface LastFMSearchAttr {
+export type LastFMSearchAttr = {
   "opensearch:Query": {
     "#text": string;
     role: string;
@@ -38,20 +38,20 @@ export interface LastFMSearchAttr {
   "opensearch:totalResults": string;
   "opensearch:startIndex": string;
   "opensearch:itemsPerPage": string;
-}
+};
 
-export interface LastFMArtistSummary {
+export type LastFMArtistSummary = {
   name: string;
   mbid: string;
   url: string;
-}
+};
 
-export interface LastFMTrackSummary {
+export type LastFMTrackSummary = {
   name: string;
   mbid: string;
   url: string;
   artist: LastFMArtistSummary;
-}
+};
 
 // shared param patterns
 type PaginationParams = { limit?: number; page?: number };
@@ -62,7 +62,7 @@ type PeriodParam = {
 
 // ---- album ----
 
-export interface AlbumInfo {
+export type AlbumInfo = {
   album: {
     name: string;
     artist: string;
@@ -83,9 +83,9 @@ export interface AlbumInfo {
     tags: { tag: LastFMTag[] };
     wiki?: LastFMWiki;
   };
-}
+};
 
-export interface AlbumSearchResult {
+export type AlbumSearchResult = {
   results: LastFMSearchAttr & {
     albummatches: {
       album: {
@@ -98,18 +98,18 @@ export interface AlbumSearchResult {
       }[];
     };
   };
-}
+};
 
-export interface AlbumTagsResult {
+export type AlbumTagsResult = {
   tags: { tag: LastFMTag[] };
-}
+};
 
-export interface AlbumTopTagsResult {
+export type AlbumTopTagsResult = {
   toptags: {
     tag: LastFMTagWithCount[];
     "@attr": { artist: string; album: string };
   };
-}
+};
 
 type AlbumEndpoints =
   | Endpoint<"album.addTags", { artist: string; album: string; tags: string }>
@@ -148,7 +148,7 @@ type AlbumEndpoints =
 
 // ---- artist ----
 
-export interface ArtistInfo {
+export type ArtistInfo = {
   artist: {
     name: string;
     mbid: string;
@@ -166,18 +166,18 @@ export interface ArtistInfo {
     tags: { tag: LastFMTag[] };
     bio?: LastFMWiki;
   };
-}
+};
 
-export interface ArtistCorrectionResult {
+export type ArtistCorrectionResult = {
   corrections: {
     correction: {
       artist: { name: string; mbid: string; url: string };
       "@attr": { index: string };
     };
   };
-}
+};
 
-export interface ArtistSimilarResult {
+export type ArtistSimilarResult = {
   similarartists: {
     artist: {
       name: string;
@@ -188,13 +188,13 @@ export interface ArtistSimilarResult {
     }[];
     "@attr": { artist: string };
   };
-}
+};
 
-export interface ArtistTagsResult {
+export type ArtistTagsResult = {
   tags: { tag: LastFMTag[] };
-}
+};
 
-export interface ArtistTopAlbumsResult {
+export type ArtistTopAlbumsResult = {
   topalbums: {
     album: {
       name: string;
@@ -206,13 +206,13 @@ export interface ArtistTopAlbumsResult {
     }[];
     "@attr": LastFMPaginationAttr & { artist: string };
   };
-}
+};
 
-export interface ArtistTopTagsResult {
+export type ArtistTopTagsResult = {
   toptags: { tag: LastFMTagWithCount[]; "@attr": { artist: string } };
-}
+};
 
-export interface ArtistTopTracksResult {
+export type ArtistTopTracksResult = {
   toptracks: {
     track: {
       name: string;
@@ -226,9 +226,9 @@ export interface ArtistTopTracksResult {
     }[];
     "@attr": LastFMPaginationAttr & { artist: string };
   };
-}
+};
 
-export interface ArtistSearchResult {
+export type ArtistSearchResult = {
   results: LastFMSearchAttr & {
     artistmatches: {
       artist: {
@@ -240,7 +240,7 @@ export interface ArtistSearchResult {
       }[];
     };
   };
-}
+};
 
 type ArtistEndpoints =
   | Endpoint<"artist.addTags", { artist: string; tags: string }>
@@ -289,17 +289,17 @@ type ArtistEndpoints =
 
 // ---- auth ----
 
-export interface AuthSession {
+export type AuthSession = {
   session: {
     name: string;
     key: string;
     subscriber: number;
   };
-}
+};
 
-export interface AuthToken {
+export type AuthToken = {
   token: string;
-}
+};
 
 type AuthEndpoints =
   | Endpoint<
@@ -312,7 +312,7 @@ type AuthEndpoints =
 
 // ---- chart ----
 
-export interface ChartTopArtistsResult {
+export type ChartTopArtistsResult = {
   artists: {
     artist: {
       name: string;
@@ -324,9 +324,9 @@ export interface ChartTopArtistsResult {
     }[];
     "@attr": LastFMPaginationAttr;
   };
-}
+};
 
-export interface ChartTopTagsResult {
+export type ChartTopTagsResult = {
   tags: {
     tag: {
       name: string;
@@ -337,9 +337,9 @@ export interface ChartTopTagsResult {
     }[];
     "@attr": LastFMPaginationAttr;
   };
-}
+};
 
-export interface ChartTopTracksResult {
+export type ChartTopTracksResult = {
   tracks: {
     track: {
       name: string;
@@ -352,7 +352,7 @@ export interface ChartTopTracksResult {
     }[];
     "@attr": LastFMPaginationAttr;
   };
-}
+};
 
 type ChartEndpoints =
   | Endpoint<"chart.getTopArtists", PaginationParams, ChartTopArtistsResult>
@@ -361,7 +361,7 @@ type ChartEndpoints =
 
 // ---- geo ----
 
-export interface GeoTopArtistsResult {
+export type GeoTopArtistsResult = {
   topartists: {
     artist: {
       name: string;
@@ -372,9 +372,9 @@ export interface GeoTopArtistsResult {
     }[];
     "@attr": LastFMPaginationAttr & { country: string };
   };
-}
+};
 
-export interface GeoTopTracksResult {
+export type GeoTopTracksResult = {
   tracks: {
     track: {
       name: string;
@@ -387,7 +387,7 @@ export interface GeoTopTracksResult {
     }[];
     "@attr": LastFMPaginationAttr & { country: string };
   };
-}
+};
 
 type GeoEndpoints =
   | Endpoint<
@@ -403,7 +403,7 @@ type GeoEndpoints =
 
 // ---- library ----
 
-export interface LibraryArtistsResult {
+export type LibraryArtistsResult = {
   artists: {
     artist: {
       name: string;
@@ -415,7 +415,7 @@ export interface LibraryArtistsResult {
     }[];
     "@attr": LastFMPaginationAttr & { user: string };
   };
-}
+};
 
 type LibraryEndpoints = Endpoint<
   "library.getArtists",
@@ -425,7 +425,7 @@ type LibraryEndpoints = Endpoint<
 
 // ---- tag ----
 
-export interface TagInfo {
+export type TagInfo = {
   tag: {
     name: string;
     url: string;
@@ -433,16 +433,16 @@ export interface TagInfo {
     taggings: number;
     wiki?: LastFMWiki;
   };
-}
+};
 
-export interface TagSimilarResult {
+export type TagSimilarResult = {
   similartags: {
     tag: LastFMTag[];
     "@attr": { tag: string };
   };
-}
+};
 
-export interface TagTopAlbumsResult {
+export type TagTopAlbumsResult = {
   albums: {
     album: {
       name: string;
@@ -454,9 +454,9 @@ export interface TagTopAlbumsResult {
     }[];
     "@attr": LastFMPaginationAttr & { tag: string };
   };
-}
+};
 
-export interface TagTopArtistsResult {
+export type TagTopArtistsResult = {
   topartists: {
     artist: {
       name: string;
@@ -467,9 +467,9 @@ export interface TagTopArtistsResult {
     }[];
     "@attr": LastFMPaginationAttr & { tag: string };
   };
-}
+};
 
-export interface TagTopTagsResult {
+export type TagTopTagsResult = {
   toptags: {
     tag: {
       name: string;
@@ -477,9 +477,9 @@ export interface TagTopTagsResult {
       reach: number;
     }[];
   };
-}
+};
 
-export interface TagTopTracksResult {
+export type TagTopTracksResult = {
   tracks: {
     track: {
       name: string;
@@ -491,14 +491,14 @@ export interface TagTopTracksResult {
     }[];
     "@attr": LastFMPaginationAttr & { tag: string };
   };
-}
+};
 
-export interface TagWeeklyChartListResult {
+export type TagWeeklyChartListResult = {
   weeklychartlist: {
     chart: { "#text": string; from: string; to: string }[];
     "@attr": { tag: string };
   };
-}
+};
 
 type TagEndpoints =
   | Endpoint<"tag.getInfo", { tag: string; lang?: string }, TagInfo>
@@ -527,7 +527,7 @@ type TagEndpoints =
 
 // ---- track ----
 
-export interface TrackInfo {
+export type TrackInfo = {
   track: {
     name: string;
     mbid: string;
@@ -548,9 +548,9 @@ export interface TrackInfo {
     userplaycount?: string;
     userloved?: string;
   };
-}
+};
 
-export interface TrackCorrectionResult {
+export type TrackCorrectionResult = {
   corrections: {
     correction: {
       track: {
@@ -566,9 +566,9 @@ export interface TrackCorrectionResult {
       };
     };
   };
-}
+};
 
-export interface TrackSimilarResult {
+export type TrackSimilarResult = {
   similartracks: {
     track: {
       name: string;
@@ -580,20 +580,20 @@ export interface TrackSimilarResult {
     }[];
     "@attr": { artist: string };
   };
-}
+};
 
-export interface TrackTagsResult {
+export type TrackTagsResult = {
   tags: { tag: LastFMTag[] };
-}
+};
 
-export interface TrackTopTagsResult {
+export type TrackTopTagsResult = {
   toptags: {
     tag: LastFMTagWithCount[];
     "@attr": { artist: string; track: string };
   };
-}
+};
 
-export interface TrackSearchResult {
+export type TrackSearchResult = {
   results: LastFMSearchAttr & {
     trackmatches: {
       track: {
@@ -606,9 +606,9 @@ export interface TrackSearchResult {
       }[];
     };
   };
-}
+};
 
-export interface TrackScrobbleResult {
+export type TrackScrobbleResult = {
   scrobbles: {
     scrobble: {
       track: { corrected: string; "#text": string };
@@ -620,9 +620,9 @@ export interface TrackScrobbleResult {
     };
     "@attr": { accepted: number; ignored: number };
   };
-}
+};
 
-export interface TrackNowPlayingResult {
+export type TrackNowPlayingResult = {
   nowplaying: {
     track: { corrected: string; "#text": string };
     artist: { corrected: string; "#text": string };
@@ -630,7 +630,7 @@ export interface TrackNowPlayingResult {
     albumArtist: { corrected: string };
     ignoredMessage: { code: string; "#text": string };
   };
-}
+};
 
 type TrackEndpoints =
   | Endpoint<"track.addTags", { artist: string; track: string; tags: string }>
@@ -713,7 +713,7 @@ type TrackEndpoints =
 
 // ---- user ----
 
-export interface UserInfo {
+export type UserInfo = {
   user: {
     name: string;
     realname: string;
@@ -728,9 +728,9 @@ export interface UserInfo {
     registered: { unixtime: string; "#text": number };
     type: string;
   };
-}
+};
 
-export interface UserFriendsResult {
+export type UserFriendsResult = {
   friends: {
     user: {
       name: string;
@@ -743,9 +743,9 @@ export interface UserFriendsResult {
     }[];
     "@attr": LastFMPaginationAttr & { user: string };
   };
-}
+};
 
-export interface UserLovedTracksResult {
+export type UserLovedTracksResult = {
   lovedtracks: {
     track: {
       name: string;
@@ -757,9 +757,9 @@ export interface UserLovedTracksResult {
     }[];
     "@attr": LastFMPaginationAttr & { user: string };
   };
-}
+};
 
-export interface UserPersonalTagsResult {
+export type UserPersonalTagsResult = {
   taggings: {
     artists?: {
       artist: {
@@ -789,25 +789,38 @@ export interface UserPersonalTagsResult {
     };
     "@attr": LastFMPaginationAttr & { user: string; tag: string };
   };
-}
+};
 
-export interface UserRecentTracksResult {
+type UserRecentTrackBase = {
+  name: string;
+  mbid: string;
+  url: string;
+  album: { mbid: string; "#text": string };
+  image: LastFMImage[];
+  date?: { uts: string; "#text": string };
+  "@attr"?: { nowplaying: string };
+};
+
+export type UserRecentTracksResult = {
   recenttracks: {
-    track: {
-      name: string;
-      mbid: string;
-      url: string;
+    track: (UserRecentTrackBase & {
       artist: { mbid: string; "#text": string };
-      album: { mbid: string; "#text": string };
-      image: LastFMImage[];
-      date?: { uts: string; "#text": string };
-      "@attr"?: { nowplaying: string };
-    }[];
+    })[];
     "@attr": LastFMPaginationAttr & { user: string };
   };
-}
+};
 
-export interface UserTopAlbumsResult {
+export type UserRecentTracksExtendedResult = {
+  recenttracks: {
+    track: (UserRecentTrackBase & {
+      artist: { name: string; mbid: string; url: string; image: LastFMImage[] };
+      loved: "0" | "1";
+    })[];
+    "@attr": LastFMPaginationAttr & { user: string };
+  };
+};
+
+export type UserTopAlbumsResult = {
   topalbums: {
     album: {
       name: string;
@@ -820,9 +833,9 @@ export interface UserTopAlbumsResult {
     }[];
     "@attr": LastFMPaginationAttr & { user: string };
   };
-}
+};
 
-export interface UserTopArtistsResult {
+export type UserTopArtistsResult = {
   topartists: {
     artist: {
       name: string;
@@ -834,9 +847,9 @@ export interface UserTopArtistsResult {
     }[];
     "@attr": LastFMPaginationAttr & { user: string };
   };
-}
+};
 
-export interface UserTopTagsResult {
+export type UserTopTagsResult = {
   toptags: {
     tag: {
       name: string;
@@ -845,9 +858,9 @@ export interface UserTopTagsResult {
     }[];
     "@attr": { user: string };
   };
-}
+};
 
-export interface UserTopTracksResult {
+export type UserTopTracksResult = {
   toptracks: {
     track: {
       name: string;
@@ -860,9 +873,9 @@ export interface UserTopTracksResult {
     }[];
     "@attr": LastFMPaginationAttr & { user: string };
   };
-}
+};
 
-export interface UserWeeklyAlbumChartResult {
+export type UserWeeklyAlbumChartResult = {
   weeklyalbumchart: {
     album: {
       name: string;
@@ -874,9 +887,9 @@ export interface UserWeeklyAlbumChartResult {
     }[];
     "@attr": { user: string; from: string; to: string };
   };
-}
+};
 
-export interface UserWeeklyArtistChartResult {
+export type UserWeeklyArtistChartResult = {
   weeklyartistchart: {
     artist: {
       name: string;
@@ -887,16 +900,16 @@ export interface UserWeeklyArtistChartResult {
     }[];
     "@attr": { user: string; from: string; to: string };
   };
-}
+};
 
-export interface UserWeeklyChartListResult {
+export type UserWeeklyChartListResult = {
   weeklychartlist: {
     chart: { from: string; to: string }[];
     "@attr": { user: string };
   };
-}
+};
 
-export interface UserWeeklyTrackChartResult {
+export type UserWeeklyTrackChartResult = {
   weeklytrackchart: {
     track: {
       name: string;
@@ -908,7 +921,7 @@ export interface UserWeeklyTrackChartResult {
     }[];
     "@attr": { user: string; from: string; to: string };
   };
-}
+};
 
 type UserEndpoints =
   | Endpoint<
