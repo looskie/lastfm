@@ -1,0 +1,37 @@
+{
+  "name": "lastfm-sdk",
+  "version": "0.1.0",
+  "description": "Type-safe Last.fm API client",
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "bun bunup --minify",
+    "test": "bun test",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "lastfm",
+    "last.fm",
+    "api",
+    "sdk",
+    "typescript",
+    "type-safe"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "pathcat": "^1.5.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bunup": "^0.16.31"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
